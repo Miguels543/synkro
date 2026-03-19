@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { signOut } from "firebase/auth"
 import { auth } from "../../firebase/config"
 import { useAuth } from "../../context/authcontext"
+import { useState } from "react"
 
 const navStyle = `
   @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap');
@@ -136,6 +137,138 @@ const navStyle = `
     color: rgba(239,68,68,.7);
     background: rgba(239,68,68,.05);
   }
+
+  /* ── HAMBURGER ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 1100;
+    flex-shrink: 0;
+  }
+
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .nav-hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+    background: #00f3ff;
+  }
+  .nav-hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+    background: #00f3ff;
+  }
+
+  /* ── MENU MÓVIL ── */
+  .nav-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 65px;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 10, 20, 0.97);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,243,255,0.12);
+    flex-direction: column;
+    padding: 20px 24px 28px;
+    gap: 0;
+    z-index: 999;
+  }
+
+  .nav-mobile-menu.open { display: flex; }
+
+  .nav-mobile-menu li {
+    list-style: none;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .nav-mobile-menu li:last-child { border-bottom: none; }
+
+  .nav-mobile-menu a {
+    display: block;
+    padding: 14px 0;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 15px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-mobile-menu a:hover,
+  .nav-mobile-menu a.active {
+    color: #00f3ff;
+  }
+
+  .nav-mobile-bottom {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,243,255,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-mobile-bottom .nav-perfil {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border-color: rgba(0,243,255,0.18);
+    background: rgba(0,243,255,0.06);
+    gap: 14px;
+    align-items: center;
+  }
+
+  .nav-mobile-bottom .nav-perfil-av {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .nav-mobile-bottom .nav-perfil-nom {
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .nav-mobile-bottom .btn-logout {
+    width: 100%;
+    padding: 11px;
+    font-size: 14px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 0 20px;
+    }
+
+    .navbar-links { display: none; }
+    .navbar-right  { display: none; }
+
+    .nav-hamburger { display: flex; }
+  }
 `
 
 function Navbar() {
@@ -143,14 +276,18 @@ function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const rol = user?.rol
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const esAuthPage = ["/login", "/register"].includes(location.pathname)
   const isActive = (path) => location.pathname === path ? "active" : ""
 
   const handleLogout = async () => {
+    setMenuOpen(false)
     await signOut(auth)
     navigate("/")
   }
+
+  const closeMenu = () => setMenuOpen(false)
 
   const inicial = user?.displayName
     ? user.displayName[0].toUpperCase()
@@ -164,23 +301,21 @@ function Navbar() {
       <nav className="navbar">
         <Link to="/" className="navbar-logo">SYNKRO</Link>
 
+        {/* Links desktop — igual que antes */}
         <ul className="navbar-links">
-          {/* Links públicos — siempre visibles */}
-          <li><Link to="/" className={isActive("/")}>Inicio</Link></li>
-          <li><Link to="/planes" className={isActive("/planes")}>Planes</Link></li>
+          <li><Link to="/"          className={isActive("/")}>Inicio</Link></li>
+          <li><Link to="/planes"    className={isActive("/planes")}>Planes</Link></li>
           <li><Link to="/solicitud" className={isActive("/solicitud")}>Solicitud</Link></li>
-          <li><Link to="/nosotros" className={isActive("/nosotros")}>Nosotros</Link></li>
+          <li><Link to="/nosotros"  className={isActive("/nosotros")}>Nosotros</Link></li>
           <li><Link to="/portafolio" className={isActive("/portafolio")}>Portafolio</Link></li>
 
-          {/* Solo vendedor */}
           {rol === "vendedor" && (
             <>
               <li><Link to="/dashboard" className={isActive("/dashboard")}>Dashboard</Link></li>
-              <li><Link to="/retos" className={isActive("/retos")}>Proyectos</Link></li>
+              <li><Link to="/retos"     className={isActive("/retos")}>Proyectos</Link></li>
             </>
           )}
 
-          {/* Solo admin */}
           {rol === "admin" && (
             <>
               <li><Link to="/retos" className={isActive("/retos")}>Proyectos</Link></li>
@@ -189,6 +324,7 @@ function Navbar() {
           )}
         </ul>
 
+        {/* Perfil + logout desktop — igual que antes */}
         <div className="navbar-right">
           {!esAuthPage && user && (
             <>
@@ -202,7 +338,56 @@ function Navbar() {
             </>
           )}
         </div>
+
+        {/* Hamburger — solo en móvil */}
+        <button
+          className={`nav-hamburger${menuOpen ? " open" : ""}`}
+          onClick={() => setMenuOpen(m => !m)}
+          aria-label="Menú"
+        >
+          <span /><span /><span />
+        </button>
       </nav>
+
+      {/* Menú móvil desplegable */}
+      <ul className={`nav-mobile-menu${menuOpen ? " open" : ""}`}>
+        <li><Link to="/"          className={isActive("/")}          onClick={closeMenu}>Inicio</Link></li>
+        <li><Link to="/planes"    className={isActive("/planes")}    onClick={closeMenu}>Planes</Link></li>
+        <li><Link to="/solicitud" className={isActive("/solicitud")} onClick={closeMenu}>Solicitud</Link></li>
+        <li><Link to="/nosotros"  className={isActive("/nosotros")}  onClick={closeMenu}>Nosotros</Link></li>
+        <li><Link to="/portafolio" className={isActive("/portafolio")} onClick={closeMenu}>Portafolio</Link></li>
+
+        {rol === "vendedor" && (
+          <>
+            <li><Link to="/dashboard" className={isActive("/dashboard")} onClick={closeMenu}>Dashboard</Link></li>
+            <li><Link to="/retos"     className={isActive("/retos")}     onClick={closeMenu}>Proyectos</Link></li>
+          </>
+        )}
+
+        {rol === "admin" && (
+          <>
+            <li><Link to="/retos" className={isActive("/retos")} onClick={closeMenu}>Proyectos</Link></li>
+            <li><Link to="/admin" className={isActive("/admin")} onClick={closeMenu}>Admin</Link></li>
+          </>
+        )}
+
+        {!esAuthPage && user && (
+          <div className="nav-mobile-bottom">
+            <Link to="/perfil" className="nav-perfil" onClick={closeMenu}>
+              <div className="nav-perfil-av">{inicial}</div>
+              <span className="nav-perfil-nom">
+                {user?.displayName || user?.email}
+                <span style={{ fontSize:"11px", color:"rgba(0,243,255,0.5)", fontWeight:400, letterSpacing:"0.5px" }}>
+                  {rol === "admin" ? "Administrador" : rol === "vendedor" ? "Vendedor" : "Mi cuenta"}
+                </span>
+              </span>
+            </Link>
+            <button className="btn-logout" onClick={handleLogout}>
+              Cerrar sesión
+            </button>
+          </div>
+        )}
+      </ul>
     </>
   )
 }
