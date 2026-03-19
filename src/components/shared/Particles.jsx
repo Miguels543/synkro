@@ -17,11 +17,10 @@ const ParticlesBackground = memo(function ParticlesBackground() {
     interactivity: {
       events: {
         onHover: { enable: true, mode: "repulse" },
-        onClick: { enable: true, mode: "push" },
+        onClick: { enable: false },          // ← desactivado: evita que se multipliquen
       },
       modes: {
         repulse: { distance: 120, duration: 0.4 },
-        push: { quantity: 4 },
       },
     },
     particles: {
@@ -40,7 +39,7 @@ const ParticlesBackground = memo(function ParticlesBackground() {
         random: true,
         bounce: true,
       },
-      number: { value: 500, density: { enable: true } },
+      number: { value: 350, density: { enable: true } },   // ← de 500 a 80, más razonable
       opacity: { value: 0.5 },
       shape: { type: "circle" },
       size: { value: { min: 1, max: 4 } },
@@ -61,6 +60,7 @@ const ParticlesBackground = memo(function ParticlesBackground() {
         width: "100%",
         height: "100%",
         zIndex: 0,
+        pointerEvents: "none",              // ← nunca bloquea clicks al formulario
       }}
     />
   )

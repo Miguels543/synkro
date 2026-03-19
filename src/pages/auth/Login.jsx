@@ -1,16 +1,25 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { doc, getDoc } from "firebase/firestore"
 import { auth, db } from "../../firebase/config"
 import { useNavigate } from "react-router-dom"
 import ParticlesBackground from "../../components/shared/Particles"
+import CiudadDigital from "../../components/shared/CiudadDigital"
 
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const navigate = useNavigate()
+
+  // Detecta cambio de tamaño para swapear fondo
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768)
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -44,13 +53,16 @@ function Login() {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      position: "relative"
+      position: "relative",
+      overflow: "hidden",
     }}>
-      <ParticlesBackground />
+      {/* Fondo: partículas en desktop, ciudad digital en mobile */}
+      {isMobile ? <CiudadDigital /> : <ParticlesBackground />}
 
+      {/* Card del formulario — siempre encima del fondo */}
       <div style={{
         position: "relative",
-        zIndex: 1,
+        zIndex: 10,                          // ← alto para estar siempre sobre el fondo
         width: "100%",
         maxWidth: "400px",
         padding: "40px",
@@ -58,7 +70,8 @@ function Login() {
         border: "1px solid rgba(0, 243, 255, 0.3)",
         borderRadius: "20px",
         backdropFilter: "blur(10px)",
-        boxShadow: "0 0 30px rgba(0, 243, 255, 0.1)"
+        boxShadow: "0 0 30px rgba(0, 243, 255, 0.1)",
+        margin: "0 16px",                    // margen lateral en pantallas pequeñas
       }}>
         <h2 style={{ 
           textAlign: "center", 
@@ -134,7 +147,7 @@ const inputStyle = {
   color: "#fff",
   fontSize: "16px",
   outline: "none",
-  boxSizing: "border-box"
+  boxSizing: "border-box",
 }
 
 const buttonStyle = {

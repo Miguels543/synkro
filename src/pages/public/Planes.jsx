@@ -173,7 +173,6 @@ const styles = `
     display: flex;
     justify-content: center;
     gap: 0;
-    margin: 0 8% 60px;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 12px;
@@ -373,7 +372,6 @@ const styles = `
     z-index: 0;
   }
 
-  /* shimmer de luz que sigue al cursor — via JS */
   .plan-btn .btn-shimmer {
     position: absolute;
     width: 120px; height: 120px;
@@ -387,7 +385,6 @@ const styles = `
   }
   .plan-btn:hover .btn-shimmer { opacity: 1; }
 
-  /* texto siempre encima del shimmer */
   .plan-btn .btn-txt {
     position: relative; z-index: 2;
     display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -398,7 +395,6 @@ const styles = `
     gap: 12px;
   }
 
-  /* flecha animada */
   .plan-btn .btn-arrow {
     display: inline-block;
     transition: transform 0.25s ease;
@@ -408,7 +404,6 @@ const styles = `
     transform: translateX(5px);
   }
 
-  /* borde luminoso giratorio en hover */
   .plan-btn::before {
     content: '';
     position: absolute;
@@ -425,7 +420,6 @@ const styles = `
     animation: rotateBorder 1.2s linear infinite;
   }
 
-  /* sombra glow bajo el botón */
   .plan-btn::after {
     content: '';
     position: absolute;
@@ -701,7 +695,8 @@ const styles = `
   .tope-aviso.visible {
     opacity: 1;
   }
-    /* COMPARATIVA GURU */
+
+  /* COMPARATIVA GURU */
   .guru-banner {
     margin: 0 8% 80px;
     background: rgba(255,255,255,0.02);
@@ -785,14 +780,156 @@ const styles = `
     background: rgba(255,255,255,0.2);
   }
 
-  @media (max-width: 900px) {
-    .guru-banner {
+  /* ══════════════════════════════════════
+     RESPONSIVE — mismos breakpoints
+     que Landing.jsx
+  ══════════════════════════════════════ */
+
+  /* ── TABLET ≤ 1024px ── */
+  @media (max-width: 1024px) {
+    .planes-header  { padding: 60px 6% 40px; }
+    .planes-tabs    { max-width: 360px; }
+
+    .planes-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 0 6% 80px;
+    }
+
+    /* Popular ocupa fila completa centrado */
+    .plan-card.popular {
+      grid-column: 1 / -1;
+      transform: none;
+      padding: 44px 32px;
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .plan-card.popular:hover {
+      transform: translateY(-8px);
+    }
+
+    .configurador { padding: 0 6% 80px; }
+
+    .config-inner {
       grid-template-columns: 1fr;
+    }
+
+    .config-resumen {
+      position: static;
+      order: -1;
+    }
+
+    .guru-banner {
+      margin: 0 6% 60px;
+      gap: 28px;
+    }
+  }
+
+  /* ── MOBILE ≤ 768px ── */
+  @media (max-width: 768px) {
+
+    /* Header */
+    .planes-header {
+      padding: 48px 6% 32px;
+    }
+
+    .planes-subtitle { font-size: 15px; }
+
+    /* Tabs */
+    .planes-tabs {
+      max-width: 100%;
+      margin: 0 6% 40px;
+    }
+
+    .planes-tab {
+      font-size: 13px;
+      padding: 10px 12px;
+    }
+
+    /* Cards — una columna */
+    .planes-grid {
+      grid-template-columns: 1fr;
+      padding: 0 6% 60px;
+      gap: 16px;
+    }
+
+    .plan-card {
+      padding: 32px 24px;
+    }
+
+    .plan-card.popular {
+      grid-column: auto;
+      transform: none;
+      padding: 36px 24px;
+      max-width: 100%;
+      box-shadow: 0 0 40px rgba(168,85,247,0.12);
+    }
+
+    .plan-card.popular:hover {
+      transform: translateY(-6px);
+    }
+
+    .plan-precio { font-size: 52px; }
+
+    /* Configurador */
+    .configurador { padding: 0 6% 60px; }
+
+    .config-funciones {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .config-funcion { padding: 14px 16px; }
+
+    .config-resumen {
+      padding: 24px 20px;
+      position: static;
+      order: -1;
+    }
+
+    .resumen-total-num { font-size: 44px; }
+
+    /* Guru */
+    .guru-banner {
+      margin: 0 6% 60px;
+      padding: 28px 20px;
+      grid-template-columns: 1fr;
+      gap: 24px;
     }
 
     .guru-compare {
       grid-template-columns: 1fr;
+      gap: 12px;
     }
+
+    .guru-left h3 { font-size: 22px; }
+  }
+
+  /* ── MOBILE CHICO ≤ 480px ── */
+  @media (max-width: 480px) {
+    .planes-header { padding: 36px 5% 28px; }
+
+    .planes-tabs {
+      margin: 0 5% 32px;
+    }
+
+    .planes-tab {
+      font-size: 12px;
+      padding: 9px 10px;
+    }
+
+    .plan-card        { padding: 28px 18px; }
+    .plan-card.popular { padding: 32px 18px; }
+    .plan-precio      { font-size: 44px; }
+
+    .config-funcion-label { font-size: 13px; }
+    .config-funcion-desc  { font-size: 11px; }
+
+    .guru-banner  { margin: 0 5% 48px; padding: 22px 16px; }
+    .guru-left h3 { font-size: 20px; }
+    .guru-left p  { font-size: 13px; }
+    .guru-item    { font-size: 12px; }
   }
 `
 
@@ -859,104 +996,105 @@ function Planes() {
           Personalizar
         </button>
       </div>
-{tab === "planes" && (
-  <>
-    <div className="planes-grid">
-      {planes.map((p, i) => (
-        <div
-          key={i}
-          className={`plan-card ${p.popular ? "popular" : ""}`}
-          style={{ background: p.gradient }}
-        >
-          <div className="plan-glow" style={{ background: p.color }} />
-          {p.popular && <div className="popular-badge">Mas popular</div>}
 
-          <p className="plan-nombre" style={{ color: p.color }}>{p.nombre}</p>
+      {tab === "planes" && (
+        <>
+          <div className="planes-grid">
+            {planes.map((p, i) => (
+              <div
+                key={i}
+                className={`plan-card ${p.popular ? "popular" : ""}`}
+                style={{ background: p.gradient }}
+              >
+                <div className="plan-glow" style={{ background: p.color }} />
+                {p.popular && <div className="popular-badge">Mas popular</div>}
 
-          <div className="plan-precio-wrap">
-            <span className="plan-moneda" style={{ color: p.color }}>S/.</span>
-            <span className="plan-precio" style={{ color: p.color }}>{p.precio}</span>
-          </div>
-          <p className="plan-periodo">/ mes</p>
-          <p className="plan-desc">{p.desc}</p>
+                <p className="plan-nombre" style={{ color: p.color }}>{p.nombre}</p>
 
-          <div className="plan-funciones">
-            {p.funciones.map((f, j) => (
-              <div className="plan-funcion" key={j}>
-                <div className="plan-funcion-check si">✓</div>
-                <span>{f}</span>
+                <div className="plan-precio-wrap">
+                  <span className="plan-moneda" style={{ color: p.color }}>S/.</span>
+                  <span className="plan-precio" style={{ color: p.color }}>{p.precio}</span>
+                </div>
+                <p className="plan-periodo">/ mes</p>
+                <p className="plan-desc">{p.desc}</p>
+
+                <div className="plan-funciones">
+                  {p.funciones.map((f, j) => (
+                    <div className="plan-funcion" key={j}>
+                      <div className="plan-funcion-check si">✓</div>
+                      <span>{f}</span>
+                    </div>
+                  ))}
+                  {p.noIncluye.map((f, j) => (
+                    <div className="plan-funcion no-incluye" key={j}>
+                      <div className="plan-funcion-check no">✗</div>
+                      <span>{f}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  className="plan-btn"
+                  style={{
+                    background: p.popular
+                      ? `linear-gradient(135deg, ${p.color}, #6d28d9)`
+                      : `rgba(255,255,255,0.06)`,
+                    color: p.popular ? "#fff" : p.color,
+                    border: p.popular ? "none" : `1px solid ${p.color}40`,
+                  }}
+                  onClick={() => window.open(`https://wa.me/51990502491?text=Hola%2C%20quiero%20el%20plan%20${p.nombre}%20de%20S%2F.${p.precio}%2Fmes`, "_blank")}
+                  onMouseMove={e => {
+                    const btn = e.currentTarget
+                    const rect = btn.getBoundingClientRect()
+                    const x = e.clientX - rect.left
+                    const y = e.clientY - rect.top
+                    const shimmer = btn.querySelector('.btn-shimmer')
+                    if (shimmer) { shimmer.style.left = x + 'px'; shimmer.style.top = y + 'px' }
+                    const cx = rect.width / 2, cy = rect.height / 2
+                    const rotY = ((x - cx) / cx) * 10
+                    const rotX = -((y - cy) / cy) * 6
+                    btn.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-5px) scale(1.02)`
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.transform = ''
+                  }}
+                >
+                  <span className="btn-shimmer" />
+                  <span className="btn-txt">
+                    Empezar con {p.nombre} <em className="btn-arrow">→</em>
+                  </span>
+                </button>
               </div>
             ))}
-            {p.noIncluye.map((f, j) => (
-              <div className="plan-funcion no-incluye" key={j}>
-                <div className="plan-funcion-check no">✗</div>
-                <span>{f}</span>
-              </div>
-            ))}
           </div>
 
-          <button
-            className="plan-btn"
-            style={{
-              background: p.popular
-                ? `linear-gradient(135deg, ${p.color}, #6d28d9)`
-                : `rgba(255,255,255,0.06)`,
-              color: p.popular ? "#fff" : p.color,
-              border: p.popular ? "none" : `1px solid ${p.color}40`,
-            }}
-            onClick={() => window.open(`https://wa.me/51990502491?text=Hola%2C%20quiero%20el%20plan%20${p.nombre}%20de%20S%2F.${p.precio}%2Fmes`, "_blank")}
-            onMouseMove={e => {
-              const btn = e.currentTarget
-              const rect = btn.getBoundingClientRect()
-              const x = e.clientX - rect.left
-              const y = e.clientY - rect.top
-              const shimmer = btn.querySelector('.btn-shimmer')
-              if (shimmer) { shimmer.style.left = x + 'px'; shimmer.style.top = y + 'px' }
-              const cx = rect.width / 2, cy = rect.height / 2
-              const rotY = ((x - cx) / cx) * 10
-              const rotX = -((y - cy) / cy) * 6
-              btn.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-5px) scale(1.02)`
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.transform = ''
-            }}
-          >
-            <span className="btn-shimmer" />
-            <span className="btn-txt">
-              Empezar con {p.nombre} <em className="btn-arrow">→</em>
-            </span>
-          </button>
-        </div>
-      ))}
-    </div>
-    
-    <div className="guru-banner">
-      <div className="guru-left">
-        <h3>¿Por qué elegir Synkro?</h3>
-        <p>Muchos servicios cobran mensualidades similares, pero no te dan control real de tu sitio. Con Synkro, tu negocio es tuyo — panel propio, cambios cuando quieras y un diseño que realmente destaca.</p>
-      </div>
-      <div className="guru-compare">
-        <div className="guru-col">
-          <div className="guru-col-title ellos">Servicios tradicionales · ~S/. 115/mes</div>
-          <div className="guru-item"><span className="dot" />Diseños genéricos</div>
-          <div className="guru-item"><span className="dot" />Debes pedir cambios al soporte</div>
-          <div className="guru-item"><span className="dot" />Sin panel de administración</div>
-          <div className="guru-item"><span className="dot" />Sin automatización de WhatsApp</div>
-          <div className="guru-item"><span className="dot" />El código no es realmente tuyo</div>
-        </div>
-        <div className="guru-col synkro">
-          <div className="guru-col-title nosotros">Synkro · S/. 80/mes</div>
-          <div className="guru-item"><span className="dot" />Diseño moderno y personalizado</div>
-          <div className="guru-item"><span className="dot" />Cambios ilimitados por tu cuenta</div>
-          <div className="guru-item"><span className="dot" />Panel de administración incluido</div>
-          <div className="guru-item"><span className="dot" />Bot de WhatsApp disponible</div>
-          <div className="guru-item"><span className="dot" />El código siempre es tuyo</div>
-        </div>
-      </div>
-    </div>
-    </>
-)}
-  
+          <div className="guru-banner">
+            <div className="guru-left">
+              <h3>¿Por qué elegir Synkro?</h3>
+              <p>Muchos servicios cobran mensualidades similares, pero no te dan control real de tu sitio. Con Synkro, tu negocio es tuyo — panel propio, cambios cuando quieras y un diseño que realmente destaca.</p>
+            </div>
+            <div className="guru-compare">
+              <div className="guru-col">
+                <div className="guru-col-title ellos">Servicios tradicionales · ~S/. 115/mes</div>
+                <div className="guru-item"><span className="dot" />Diseños genéricos</div>
+                <div className="guru-item"><span className="dot" />Debes pedir cambios al soporte</div>
+                <div className="guru-item"><span className="dot" />Sin panel de administración</div>
+                <div className="guru-item"><span className="dot" />Sin automatización de WhatsApp</div>
+                <div className="guru-item"><span className="dot" />El código no es realmente tuyo</div>
+              </div>
+              <div className="guru-col synkro">
+                <div className="guru-col-title nosotros">Synkro · S/. 80/mes</div>
+                <div className="guru-item"><span className="dot" />Diseño moderno y personalizado</div>
+                <div className="guru-item"><span className="dot" />Cambios ilimitados por tu cuenta</div>
+                <div className="guru-item"><span className="dot" />Panel de administración incluido</div>
+                <div className="guru-item"><span className="dot" />Bot de WhatsApp disponible</div>
+                <div className="guru-item"><span className="dot" />El código siempre es tuyo</div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
       {tab === "config" && (
         <div className="configurador">
           <div className="config-header">

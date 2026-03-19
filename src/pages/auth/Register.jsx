@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore"
 import { auth, db } from "../../firebase/config"
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import Select from "react-select"
 import ReactCountryFlag from "react-country-flag"
 import ParticlesBackground from "../../components/shared/Particles"
+import CiudadDigital from "../../components/shared/CiudadDigital"
 
 const paises = [
   { value: "AR", label: <span><ReactCountryFlag countryCode="AR" svg /> Argentina</span> },
@@ -64,11 +65,12 @@ const styles = `
     align-items: center;
     position: relative;
     padding: 80px 20px 20px;
+    overflow: hidden;
   }
 
   .register-box {
     position: relative;
-    z-index: 1;
+    z-index: 10;
     width: 100%;
     max-width: 750px;
     padding: 40px;
@@ -177,6 +179,47 @@ const styles = `
     color: #00f3ff;
     text-decoration: none;
   }
+
+  /* ── Responsive ── */
+
+  @media (max-width: 768px) {
+    .register-box {
+      padding: 30px 20px;
+    }
+
+    .register-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .register-box h2 {
+      font-size: 22px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .register-page {
+      padding: 60px 5% 20px;
+    }
+
+    .register-box {
+      padding: 24px 16px;
+    }
+
+    .register-box h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .register-input {
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    .register-btn {
+      font-size: 15px;
+      padding: 11px;
+    }
+  }
 `
 
 function Register() {
@@ -185,12 +228,21 @@ function Register() {
     usuario: "",
     email: "",
     password: "",
-    codigoPais: { value: "+51", label: <span><ReactCountryFlag countryCode="PE" svg /> +51</span> },    whatsapp: "",
+    codigoPais: { value: "+51", label: <span><ReactCountryFlag countryCode="PE" svg /> +51</span> },
+    whatsapp: "",
     pais: null,
   })
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const navigate = useNavigate()
+
+  // Detecta cambio de tamaño para swapear fondo
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768)
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -240,7 +292,9 @@ function Register() {
   return (
     <div className="register-page">
       <style>{styles}</style>
-      <ParticlesBackground />
+
+      {/* Fondo: partículas en desktop, ciudad digital en mobile */}
+      {isMobile ? <CiudadDigital /> : <ParticlesBackground />}
 
       <div className="register-box">
         <h2>Únete como Vendedor</h2>

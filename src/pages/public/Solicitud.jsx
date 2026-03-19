@@ -210,6 +210,7 @@ const styles = `
     margin-bottom: 56px;
   }
 
+  /* STEPS BAR */
   .steps-bar {
     display: flex;
     align-items: center;
@@ -257,7 +258,7 @@ const styles = `
   }
 
   .step-label.active { color: #00f3ff; }
-  .step-label.done { color: rgba(255,255,255,0.45); }
+  .step-label.done   { color: rgba(255,255,255,0.45); }
 
   .step-line {
     width: 60px; height: 1px;
@@ -281,7 +282,7 @@ const styles = `
 
   @keyframes stepIn {
     from { opacity: 0; transform: translateY(28px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .step-heading {
@@ -631,7 +632,7 @@ const styles = `
   .success-ring:nth-child(3) { animation-delay: 0.8s; }
 
   @keyframes ringPulse {
-    0% { transform: scale(1); opacity: 0.6; }
+    0%   { transform: scale(1); opacity: 0.6; }
     100% { transform: scale(1.8); opacity: 0; }
   }
 
@@ -651,7 +652,7 @@ const styles = `
 
   @keyframes popIn {
     from { transform: scale(0) rotate(-10deg); opacity: 0; }
-    to { transform: scale(1) rotate(0deg); opacity: 1; }
+    to   { transform: scale(1) rotate(0deg);   opacity: 1; }
   }
 
   .success-title {
@@ -722,6 +723,174 @@ const styles = `
   .success-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 14px 35px rgba(0,243,255,0.35);
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — mismos breakpoints
+     que Landing.jsx
+  ══════════════════════════════════════ */
+
+  /* ── TABLET ≤ 1024px ── */
+  @media (max-width: 1024px) {
+    .solicitud-inner { padding: 48px 6% 80px; }
+
+    .tipos-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .tipo-card { padding: 20px 12px 16px; }
+
+    .tipo-icon-wrap { width: 50px; height: 50px; }
+
+    .presupuestos-grid { gap: 12px; }
+
+    .step-line { width: 44px; }
+  }
+
+  /* ── MOBILE ≤ 768px ── */
+  @media (max-width: 768px) {
+
+    .solicitud-inner {
+      padding: 40px 6% 72px;
+    }
+
+    .sol-subtitle {
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+
+    /* Steps bar — compacto */
+    .steps-bar {
+      margin-bottom: 40px;
+    }
+
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      font-size: 12px;
+    }
+
+    .step-label {
+      font-size: 11px;
+    }
+
+    .step-line {
+      width: 28px;
+      margin: 0 6px;
+    }
+
+    /* Tipos — 2 columnas en móvil */
+    .tipos-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    /* La última card (Otro) ocupa fila completa si es impar */
+    .tipo-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      max-width: 50%;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .tipo-card {
+      padding: 20px 12px 16px;
+      border-radius: 14px;
+    }
+
+    .tipo-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+    }
+
+    .tipo-label { font-size: 12px; }
+    .tipo-desc  { font-size: 10px; }
+
+    /* Presupuestos — 1 columna */
+    .presupuestos-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .presupuesto-card {
+      padding: 18px 18px;
+    }
+
+    .presupuesto-card:hover,
+    .presupuesto-card.selected {
+      transform: translateX(3px);
+    }
+
+    .presupuesto-label { font-size: 14px; }
+    .presupuesto-sub   { font-size: 11px; }
+
+    /* Form — 1 columna */
+    .form-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .form-input { font-size: 14px; padding: 13px 14px; }
+
+    .step-heading { font-size: 22px; }
+    .step-sub     { font-size: 13px; margin-bottom: 28px; }
+
+    /* Nav botones */
+    .step-nav { margin-top: 28px; gap: 10px; }
+
+    .nav-back {
+      padding: 11px 20px;
+      font-size: 13px;
+    }
+
+    .nav-next {
+      padding: 13px 28px;
+      font-size: 14px;
+    }
+
+    /* Success */
+    .success-title { font-size: 28px; }
+    .success-desc  { font-size: 14px; margin-bottom: 32px; }
+
+    .success-resumen {
+      padding: 22px 20px;
+    }
+
+    .success-resumen-item { font-size: 13px; }
+  }
+
+  /* ── MOBILE CHICO ≤ 480px ── */
+  @media (max-width: 480px) {
+    .solicitud-inner { padding: 32px 5% 60px; }
+
+    .steps-bar { margin-bottom: 32px; }
+
+    .step-circle { width: 28px; height: 28px; font-size: 11px; }
+    .step-label  { display: none; }
+    .step-line   { width: 20px; margin: 0 4px; }
+
+    .tipos-grid { gap: 8px; }
+
+    .tipo-card { padding: 16px 10px 14px; border-radius: 12px; }
+    .tipo-icon-wrap { width: 42px; height: 42px; margin-bottom: 10px; }
+    .tipo-label { font-size: 11px; }
+    .tipo-desc  { display: none; }
+
+    .tipo-card:last-child:nth-child(odd) {
+      max-width: 60%;
+    }
+
+    .step-heading { font-size: 20px; }
+
+    .nav-next { padding: 12px 22px; font-size: 13px; }
+    .nav-back { padding: 10px 16px; font-size: 12px; }
+
+    .success-title  { font-size: 24px; }
+    .success-resumen { padding: 18px 16px; }
   }
 `
 

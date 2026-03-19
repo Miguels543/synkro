@@ -96,8 +96,6 @@ const styles = `
     margin: 0 auto;
   }
 
-  .nos-hero-left {}
-
   .nos-label {
     font-size: 11px;
     letter-spacing: 5px;
@@ -358,8 +356,6 @@ const styles = `
     border: 2px solid #000;
   }
 
-  .equipo-info {}
-
   .equipo-name {
     font-family: 'Syne', sans-serif;
     font-size: 28px;
@@ -480,7 +476,7 @@ const styles = `
     line-height: 1.75;
   }
 
-  /* CTA */
+  /* CTA — sin tocar */
   .nos-cta {
     position: relative;
     z-index: 1;
@@ -546,6 +542,145 @@ const styles = `
   .btn-primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 14px 35px rgba(0,243,255,0.35);
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — mismos breakpoints
+     que Landing.jsx
+  ══════════════════════════════════════ */
+
+  /* ── TABLET ≤ 1024px ── */
+  @media (max-width: 1024px) {
+    .nos-hero {
+      padding: 80px 6% 60px;
+      gap: 48px;
+    }
+
+    .mv-section {
+      padding: 80px 6%;
+      gap: 20px;
+    }
+
+    .mv-card { padding: 36px 28px; }
+    .mv-card-title { font-size: 22px; }
+
+    .equipo-section { padding: 80px 6%; }
+
+    .equipo-card {
+      gap: 32px;
+      padding: 36px;
+    }
+
+    .valores-section { padding: 80px 6%; }
+
+    .valores-header { gap: 32px; margin-bottom: 48px; }
+
+    .valor-card { padding: 32px; }
+
+    .nos-divider { margin: 0 6%; }
+  }
+
+  /* ── MOBILE ≤ 768px ── */
+  @media (max-width: 768px) {
+
+    /* Hero — apilado */
+    .nos-hero {
+      grid-template-columns: 1fr;
+      padding: 64px 6% 48px;
+      gap: 36px;
+    }
+
+    .nos-hero-desc { font-size: 15px; max-width: 100%; }
+
+    .nos-card-main { padding: 28px 24px; }
+    .nos-card-year { font-size: 52px; }
+    .nos-card-title { font-size: 17px; }
+    .nos-card-desc  { font-size: 13px; }
+
+    /* Mision / Vision — apilado */
+    .mv-section {
+      grid-template-columns: 1fr;
+      padding: 64px 6%;
+      gap: 16px;
+    }
+
+    .mv-card { padding: 32px 24px; border-radius: 16px; }
+    .mv-card-title { font-size: 20px; }
+    .mv-card-desc  { font-size: 14px; }
+    .mv-deco       { font-size: 80px; }
+
+    /* Equipo */
+    .equipo-section { padding: 64px 6%; }
+
+    .equipo-header  { margin-bottom: 36px; }
+
+    .equipo-card {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 28px 24px;
+      border-radius: 16px;
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .equipo-avatar {
+      width: 80px; height: 80px;
+      margin: 0 auto;
+    }
+
+    .equipo-avatar-initials { font-size: 26px; }
+
+    .equipo-name { font-size: 22px; }
+    .equipo-rol  { font-size: 11px; }
+    .equipo-desc { font-size: 14px; }
+
+    .equipo-tags {
+      justify-content: center;
+    }
+
+    /* Valores */
+    .valores-section { padding: 64px 6%; }
+
+    .valores-header {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .valores-grid {
+      grid-template-columns: 1fr;
+      border-radius: 12px;
+    }
+
+    .valor-card   { padding: 32px 24px; }
+    .valor-title  { font-size: 18px; }
+    .valor-desc   { font-size: 13px; }
+
+    /* Divider */
+    .nos-divider { margin: 0 6%; }
+  }
+
+  /* ── MOBILE CHICO ≤ 480px ── */
+  @media (max-width: 480px) {
+    .nos-hero { padding: 48px 5% 36px; gap: 28px; }
+
+    .nos-card-main  { padding: 22px 18px; }
+    .nos-card-year  { font-size: 40px; }
+    .nos-card-title { font-size: 16px; }
+
+    .mv-section  { padding: 48px 5%; }
+    .mv-card     { padding: 26px 20px; }
+    .mv-card-title { font-size: 18px; }
+
+    .equipo-section { padding: 48px 5%; }
+    .equipo-card    { padding: 24px 18px; }
+    .equipo-name    { font-size: 20px; }
+
+    .valores-section { padding: 48px 5%; }
+    .valor-card      { padding: 26px 20px; }
+    .valor-title     { font-size: 17px; }
+
+    .nos-divider { margin: 0 5%; }
   }
 `
 
@@ -650,6 +785,7 @@ function Nosotros() {
             </div>
             <div className="equipo-tags">
               <span className="equipo-tag">React</span>
+              <span className="equipo-tag">Node.js</span>
               <span className="equipo-tag">Firebase</span>
               <span className="equipo-tag">UI/UX</span>
               <span className="equipo-tag">Desarrollo Web</span>

@@ -8,6 +8,7 @@ const styles = `
     flex-direction: column-reverse;
     align-items: flex-end;
     gap: 12px;
+    pointer-events: none;           /* ← el contenedor no intercepta nada */
   }
 
   .wa-tooltip {
@@ -22,7 +23,7 @@ const styles = `
     opacity: 0;
     transform: translateX(10px);
     transition: all 0.3s ease;
-    pointer-events: none;
+    pointer-events: none;           /* el tooltip tampoco */
     font-family: 'Space Grotesk', sans-serif;
   }
 
@@ -46,6 +47,7 @@ const styles = `
     transition: all 0.3s ease;
     position: relative;
     text-decoration: none;
+    pointer-events: auto;           /* ← solo el botón recibe clicks */
   }
 
   .wa-btn:hover {
@@ -59,6 +61,7 @@ const styles = `
     border-radius: 50%;
     background: rgba(37, 211, 102, 0.3);
     animation: waPulse 2s ease-out infinite;
+    pointer-events: none;           /* la animación tampoco interfiere */
   }
 
   @keyframes waPulse {
