@@ -1,37 +1,70 @@
 import { useState, useEffect } from "react"
-import { collection, getDocs, query, where, orderBy, limit } from "firebase/firestore"
+import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "../../../firebase/config"
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap');
+
   .ae { padding: 26px 30px 60px; }
   .ae-ttl { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color:#fff; margin-bottom:3px; }
   .ae-sub  { font-size:12px; color:rgba(255,255,255,.28); margin-bottom:22px; }
   .ae-loading { text-align:center; padding:80px; color:rgba(255,255,255,.25); font-size:13px; }
-  .ae-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:11px; margin-bottom:18px; }
-  .ae-stat { background:#0c0f14; border:1px solid rgba(255,255,255,.05); border-radius:11px; padding:15px 16px; position:relative; overflow:hidden; }
-  .ae-stat::after { content:''; position:absolute; top:0; left:0; right:0; height:1.5px; }
-  .ae-stat.c1::after { background:linear-gradient(90deg,#00f3ff,transparent); }
-  .ae-stat.c2::after { background:linear-gradient(90deg,#10b981,transparent); }
-  .ae-stat.c3::after { background:linear-gradient(90deg,#f59e0b,transparent); }
-  .ae-stat.c4::after { background:linear-gradient(90deg,#a855f7,transparent); }
-  .ae-stat.c5::after { background:linear-gradient(90deg,#ef4444,transparent); }
-  .ae-stat.c6::after { background:linear-gradient(90deg,#3b82f6,transparent); }
-  .ae-stat.c7::after { background:linear-gradient(90deg,#10b981,transparent); }
-  .ae-stat.c8::after { background:linear-gradient(90deg,#f59e0b,transparent); }
+
+  /* ── Tarjetas de stats ── */
+  .ae-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 11px;
+    margin-bottom: 18px;
+  }
+  .ae-stat {
+    background: #0c0f14;
+    border: 1px solid rgba(255,255,255,.05);
+    border-radius: 11px;
+    padding: 15px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ae-stat::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1.5px;
+  }
+  .ae-stat.c1::after { background: linear-gradient(90deg,#00f3ff,transparent); }
+  .ae-stat.c2::after { background: linear-gradient(90deg,#10b981,transparent); }
+  .ae-stat.c3::after { background: linear-gradient(90deg,#f59e0b,transparent); }
+  .ae-stat.c4::after { background: linear-gradient(90deg,#a855f7,transparent); }
+  .ae-stat.c5::after { background: linear-gradient(90deg,#ef4444,transparent); }
+  .ae-stat.c6::after { background: linear-gradient(90deg,#3b82f6,transparent); }
+  .ae-stat.c7::after { background: linear-gradient(90deg,#10b981,transparent); }
+  .ae-stat.c8::after { background: linear-gradient(90deg,#f59e0b,transparent); }
   .ae-stat-l { font-size:8.5px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,.22); margin-bottom:7px; }
   .ae-stat-v { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:#fff; line-height:1; margin-bottom:3px; }
   .ae-stat-s { font-size:10px; color:rgba(255,255,255,.22); }
-  .ae-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:14px; margin-bottom:14px; }
-  .ae-box { background:#0c0f14; border:1px solid rgba(255,255,255,.06); border-radius:11px; padding:18px 20px; }
+
+  /* ── Grid de boxes ── */
+  .ae-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .ae-box {
+    background: #0c0f14;
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 11px;
+    padding: 18px 20px;
+  }
   .ae-box-t { font-family:'Syne',sans-serif; font-size:13px; font-weight:800; color:#fff; margin-bottom:4px; }
   .ae-box-s { font-size:11px; color:rgba(255,255,255,.25); margin-bottom:16px; }
+
+  /* ── Gráfica de barras ── */
   .ae-bars { display:flex; align-items:flex-end; gap:8px; height:90px; }
   .ae-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; height:100%; justify-content:flex-end; }
   .ae-bar { width:100%; border-radius:4px 4px 0 0; min-height:4px; background:linear-gradient(to top,rgba(0,243,255,.6),rgba(0,243,255,.15)); transition:.3s; }
   .ae-bar:hover { background:linear-gradient(to top,#00f3ff,rgba(0,243,255,.35)); }
   .ae-bar-v { font-size:9px; font-weight:700; color:rgba(255,255,255,.4); }
   .ae-bar-m { font-size:8.5px; color:rgba(255,255,255,.22); }
+
+  /* ── Filas de vendedores ── */
   .ae-vend-row { display:flex; align-items:center; gap:11px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.04); }
   .ae-vend-row:last-child { border-bottom:none; }
   .ae-vend-n { font-size:9px; font-weight:800; color:rgba(255,255,255,.2); width:16px; flex-shrink:0; }
@@ -39,29 +72,73 @@ const CSS = `
   .ae-vend-nom { font-size:12px; font-weight:600; color:#fff; flex:1; }
   .ae-vend-v   { font-size:11px; color:rgba(255,255,255,.3); }
   .ae-vend-com { font-family:'Syne',sans-serif; font-size:12px; font-weight:800; color:#10b981; }
+
+  /* ── Filas de proyectos ── */
   .ae-proy-row { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.04); }
   .ae-proy-row:last-child { border-bottom:none; }
   .ae-proy-cat { font-size:8px; letter-spacing:1px; text-transform:uppercase; color:rgba(0,243,255,.45); margin-top:2px; }
   .ae-proy-nom { font-size:12px; font-weight:600; color:#fff; flex:1; }
   .ae-proy-v   { font-family:'Syne',sans-serif; font-size:13px; font-weight:800; color:#fff; }
   .ae-proy-vl  { font-size:9px; color:rgba(255,255,255,.25); }
+
+  /* ── Alerta ── */
   .ae-alerta { background:rgba(239,68,68,.06); border:1px solid rgba(239,68,68,.14); border-radius:11px; padding:14px 18px; margin-bottom:18px; display:flex; align-items:center; gap:12px; }
   .ae-alerta-ico { font-size:20px; flex-shrink:0; }
   .ae-alerta-t { font-size:13px; font-weight:700; color:rgba(239,68,68,.85); margin-bottom:2px; }
   .ae-alerta-s { font-size:11.5px; color:rgba(255,255,255,.3); }
+
+  /* ── Responsive 1024px ── */
+  @media (max-width: 1024px) {
+    .ae { padding: 20px 20px 50px; }
+    .ae-stats { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .ae-stat-v { font-size: 19px; }
+  }
+
+  /* ── Responsive 768px ── */
+  @media (max-width: 768px) {
+    .ae { padding: 18px 16px 50px; }
+
+    /* 2 columnas en stats */
+    .ae-stats { grid-template-columns: repeat(2, 1fr); gap: 9px; }
+
+    /* grid de boxes apilado */
+    .ae-grid { grid-template-columns: 1fr; }
+
+    .ae-ttl { font-size: 17px; }
+    .ae-sub  { font-size: 11px; margin-bottom: 16px; }
+    .ae-stat-v { font-size: 20px; }
+    .ae-stat-l { font-size: 8px; }
+  }
+
+  /* ── Responsive 480px ── */
+  @media (max-width: 480px) {
+    .ae { padding: 14px 12px 40px; }
+
+    /* sigue en 2 columnas pero más compacto */
+    .ae-stats { gap: 7px; }
+    .ae-stat  { padding: 12px 12px; }
+    .ae-stat-v { font-size: 18px; }
+
+    .ae-box { padding: 14px 14px; }
+    .ae-ttl { font-size: 16px; }
+
+    /* barras un poco más bajas */
+    .ae-bars { height: 70px; }
+    .ae-bar-v { font-size: 8px; }
+    .ae-bar-m { font-size: 7.5px; }
+  }
 `
 
 export default function AdminEstadisticas() {
-  const [stats,        setStats]        = useState(null)
-  const [graficaVentas,setGraficaVentas]= useState([])
-  const [topVendedores,setTopVendedores]= useState([])
-  const [topProyectos, setTopProyectos] = useState([])
-  const [loading,      setLoading]      = useState(true)
+  const [stats,         setStats]         = useState(null)
+  const [graficaVentas, setGraficaVentas] = useState([])
+  const [topVendedores, setTopVendedores] = useState([])
+  const [topProyectos,  setTopProyectos]  = useState([])
+  const [loading,       setLoading]       = useState(true)
 
   useEffect(() => {
     const cargar = async () => {
       try {
-        // Cargar datos en paralelo
         const [snapVentas, snapUsers, snapProyectos, snapSolicitudes, snapPagos] = await Promise.all([
           getDocs(collection(db, "ventas")),
           getDocs(collection(db, "users")),
@@ -70,10 +147,10 @@ export default function AdminEstadisticas() {
           getDocs(collection(db, "pagos")),
         ])
 
-        const ventas      = snapVentas.docs.map(d => ({ id: d.id, ...d.data() }))
-        const users       = snapUsers.docs.map(d => ({ id: d.id, ...d.data() }))
-        const proyectos   = snapProyectos.docs.map(d => ({ id: d.id, ...d.data() }))
-        const pagos       = snapPagos.docs.map(d => ({ id: d.id, ...d.data() }))
+        const ventas    = snapVentas.docs.map(d => ({ id: d.id, ...d.data() }))
+        const users     = snapUsers.docs.map(d => ({ id: d.id, ...d.data() }))
+        const proyectos = snapProyectos.docs.map(d => ({ id: d.id, ...d.data() }))
+        const pagos     = snapPagos.docs.map(d => ({ id: d.id, ...d.data() }))
 
         const ventasAprobadas = ventas.filter(v => v.estado === "aprobado")
         const ahora = new Date()
@@ -81,48 +158,39 @@ export default function AdminEstadisticas() {
           const f = v.fecha?.toDate ? v.fecha.toDate() : new Date(v.fecha)
           return f.getMonth() === ahora.getMonth() && f.getFullYear() === ahora.getFullYear()
         }
-        const ventasMes       = ventasAprobadas.filter(esMes)
-        const ingresosMes     = ventasMes.reduce((a, v) => a + Number(v.monto || 0), 0)
-        const comisionesPag   = pagos.filter(p => p.estado === "pagado").reduce((a,p) => a + Number(p.monto||0), 0)
-        const pendientePago   = pagos.filter(p => p.estado === "pendiente").reduce((a,p) => a + Number(p.monto||0), 0)
-        const vendedoresAct   = users.filter(u => u.rol === "vendedor" && (u.estado||"activo") === "activo").length
-        const proyDisp        = proyectos.filter(p => p.estado === "disponible").length
-        const tasaCierre      = ventas.length > 0 ? Math.round((ventasAprobadas.length / ventas.length) * 100) : 0
+        const ventasMes     = ventasAprobadas.filter(esMes)
+        const ingresosMes   = ventasMes.reduce((a, v) => a + Number(v.monto || 0), 0)
+        const comisionesPag = pagos.filter(p => p.estado === "pagado").reduce((a,p) => a + Number(p.monto||0), 0)
+        const pendientePago = pagos.filter(p => p.estado === "pendiente").reduce((a,p) => a + Number(p.monto||0), 0)
+        const vendedoresAct = users.filter(u => u.rol === "vendedor" && (u.estado||"activo") === "activo").length
+        const proyDisp      = proyectos.filter(p => p.estado === "disponible").length
+        const tasaCierre    = ventas.length > 0 ? Math.round((ventasAprobadas.length / ventas.length) * 100) : 0
 
         setStats({
-          vendedoresActivos:    vendedoresAct,
+          vendedoresActivos:     vendedoresAct,
           ingresosMes,
-          ventasMes:            ventasMes.length,
-          comisionesPagadas:    comisionesPag,
-          pendientesPago:       pendientePago,
-          proyectosDisponibles: proyDisp,
+          ventasMes:             ventasMes.length,
+          comisionesPagadas:     comisionesPag,
+          pendientesPago:        pendientePago,
+          proyectosDisponibles:  proyDisp,
           tasaCierre,
           solicitudesPendientes: snapSolicitudes.size,
         })
 
-        // Gráfica: agrupar ventas aprobadas por mes (últimos 7 meses)
+        // Gráfica últimos 7 meses
         const meses = []
         for (let i = 6; i >= 0; i--) {
           const d = new Date(ahora.getFullYear(), ahora.getMonth() - i, 1)
-          meses.push({
-            mes: d.toLocaleString("es-PE", { month:"short" }),
-            mes2: d.getMonth(),
-            año: d.getFullYear(),
-            ventas: 0,
-            ingresos: 0,
-          })
+          meses.push({ mes: d.toLocaleString("es-PE", { month:"short" }), mes2: d.getMonth(), año: d.getFullYear(), ventas: 0, ingresos: 0 })
         }
         ventasAprobadas.forEach(v => {
           const f = v.fecha?.toDate ? v.fecha.toDate() : new Date(v.fecha)
           const idx = meses.findIndex(m => m.mes2 === f.getMonth() && m.año === f.getFullYear())
-          if (idx >= 0) {
-            meses[idx].ventas++
-            meses[idx].ingresos += Number(v.monto || 0)
-          }
+          if (idx >= 0) { meses[idx].ventas++; meses[idx].ingresos += Number(v.monto || 0) }
         })
         setGraficaVentas(meses)
 
-        // Top vendedores por comisión este mes
+        // Top vendedores
         const porVendedor = {}
         ventasMes.forEach(v => {
           if (!porVendedor[v.vendedor]) porVendedor[v.vendedor] = { nombre: v.vendedor, ventas: 0, comision: 0 }
@@ -131,7 +199,7 @@ export default function AdminEstadisticas() {
         })
         setTopVendedores(Object.values(porVendedor).sort((a,b) => b.comision - a.comision).slice(0, 5))
 
-        // Top proyectos este mes
+        // Top proyectos
         const porProyecto = {}
         ventasMes.forEach(v => {
           if (!porProyecto[v.proyecto]) porProyecto[v.proyecto] = { nombre: v.proyecto, categoria: v.categoria || "", ventas: 0 }
@@ -177,14 +245,14 @@ export default function AdminEstadisticas() {
 
       <div className="ae-stats">
         {[
-          { cls:"c1", l:"Vendedores activos",     v: stats.vendedoresActivos,                                s:"En la plataforma"   },
-          { cls:"c2", l:"Ingresos este mes",       v:`S/.${stats.ingresosMes.toLocaleString()}`,              s:"Ventas cerradas"    },
-          { cls:"c3", l:"Ventas este mes",         v: stats.ventasMes,                                       s:"Ventas aprobadas"   },
-          { cls:"c4", l:"Comisiones pagadas",      v:`S/.${stats.comisionesPagadas.toLocaleString()}`,        s:"A vendedores"       },
-          { cls:"c5", l:"Pendiente de pago",       v:`S/.${stats.pendientesPago.toLocaleString()}`,           s:"Por aprobar"        },
-          { cls:"c6", l:"Proyectos disponibles",   v: stats.proyectosDisponibles,                            s:"En catálogo activo" },
-          { cls:"c7", l:"Tasa de cierre",          v:`${stats.tasaCierre}%`,                                 s:"Reservas → ventas"  },
-          { cls:"c8", l:"Solicitudes pendientes",  v: stats.solicitudesPendientes,                           s:"Esperando revisión" },
+          { cls:"c1", l:"Vendedores activos",    v: stats.vendedoresActivos,                          s:"En la plataforma"   },
+          { cls:"c2", l:"Ingresos este mes",      v:`S/.${stats.ingresosMes.toLocaleString()}`,        s:"Ventas cerradas"    },
+          { cls:"c3", l:"Ventas este mes",        v: stats.ventasMes,                                  s:"Ventas aprobadas"   },
+          { cls:"c4", l:"Comisiones pagadas",     v:`S/.${stats.comisionesPagadas.toLocaleString()}`,  s:"A vendedores"       },
+          { cls:"c5", l:"Pendiente de pago",      v:`S/.${stats.pendientesPago.toLocaleString()}`,     s:"Por aprobar"        },
+          { cls:"c6", l:"Proyectos disponibles",  v: stats.proyectosDisponibles,                       s:"En catálogo activo" },
+          { cls:"c7", l:"Tasa de cierre",         v:`${stats.tasaCierre}%`,                            s:"Reservas → ventas"  },
+          { cls:"c8", l:"Solicitudes pendientes", v: stats.solicitudesPendientes,                      s:"Esperando revisión" },
         ].map((s,i) => (
           <div key={i} className={`ae-stat ${s.cls}`}>
             <div className="ae-stat-l">{s.l}</div>

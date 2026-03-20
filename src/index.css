@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
+:root {
+  --navbar-h: 65px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -8,9 +12,9 @@
 }
 
 body {
-  background: #000;
+  background: #050709;
   color: #fff;
   min-height: 100vh;
 }
-/* ya existe en tu index.css */
-.page-content { padding-top: 65px; }
+
+.page-content { padding-top: var(--navbar-h); }

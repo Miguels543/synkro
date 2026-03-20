@@ -139,6 +139,79 @@ const CSS = `
     padding: 16px 20px; border-radius: 0 8px 8px 0;
   }
 
+  /* ── Clientes reales ── */
+  .pd-cli-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .pd-cli-card {
+    background: rgba(255,255,255,.02);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color .18s, background .18s;
+  }
+  .pd-cli-card:hover {
+    border-color: rgba(255,255,255,.14);
+    background: rgba(255,255,255,.035);
+  }
+
+  .pd-cli-top {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .pd-cli-logo {
+    width: 40px; height: 40px; border-radius: 9px;
+    object-fit: cover; flex-shrink: 0;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  .pd-cli-logo-ph {
+    width: 40px; height: 40px; border-radius: 9px;
+    flex-shrink: 0;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .pd-cli-nombre {
+    font-size: 14px; font-weight: 700; color: #fff;
+  }
+
+  .pd-cli-testimonio {
+    font-size: 13px;
+    color: rgba(255,255,255,.42);
+    line-height: 1.65;
+    font-style: italic;
+    border-left: 2px solid rgba(0,243,255,.18);
+    padding-left: 10px;
+    margin: 0;
+  }
+
+  .pd-cli-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600;
+    color: rgba(0,243,255,.6);
+    text-decoration: none;
+    border: 1px solid rgba(0,243,255,.15);
+    border-radius: 6px;
+    padding: 4px 10px;
+    width: fit-content;
+    transition: all .16s;
+  }
+  .pd-cli-link:hover {
+    color: #00f3ff;
+    border-color: rgba(0,243,255,.35);
+    background: rgba(0,243,255,.05);
+  }
+
+  /* ── Sidebar card ── */
   .pd-card {
     background: #0c0f14;
     border: 1px solid rgba(255,255,255,.07);
@@ -220,6 +293,7 @@ const CSS = `
     .pd-card { position: static; }
     .pd-funcionalidades { grid-template-columns: 1fr; }
     .pd-hero { height: 380px; }
+    .pd-cli-grid { grid-template-columns: 1fr; }
   }
 `
 
@@ -272,6 +346,8 @@ export default function PortafolioDetalle() {
         ? proyecto.funcionalidades.split(",").map(f => f.trim()).filter(Boolean)
         : [])
 
+  const clientes = Array.isArray(proyecto.clientes) ? proyecto.clientes : []
+
   const estadoCls = proyecto.estado === "disponible" ? "disp" : "pausado"
   const estadoLbl = proyecto.estado === "disponible" ? "Disponible" : "No disponible"
 
@@ -305,6 +381,7 @@ export default function PortafolioDetalle() {
 
       <div className="pd-body">
         <div className="pd-left">
+
           {proyecto.desc && (
             <div className="pd-section">
               <div className="pd-section-label">Sobre el proyecto</div>
@@ -343,6 +420,45 @@ export default function PortafolioDetalle() {
               </div>
             </div>
           )}
+
+          {/* ── Clientes reales ── */}
+          {clientes.length > 0 && (
+            <div className="pd-section">
+              <div className="pd-section-label">Negocios que usan este sistema</div>
+              <div className="pd-cli-grid">
+                {clientes.map(c => (
+                  <div key={c.id} className="pd-cli-card">
+                    <div className="pd-cli-top">
+                      {c.logo
+                        ? <img
+                            src={c.logo}
+                            alt={c.nombre}
+                            className="pd-cli-logo"
+                            onError={e => e.target.style.opacity = ".2"}
+                          />
+                        : <div className="pd-cli-logo-ph">🏢</div>
+                      }
+                      <div className="pd-cli-nombre">{c.nombre}</div>
+                    </div>
+                    {c.testimonio && (
+                      <p className="pd-cli-testimonio">"{c.testimonio}"</p>
+                    )}
+                    {c.link && (
+                      <a
+                        href={c.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pd-cli-link"
+                      >
+                        ↗ Ver sitio real
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
         </div>
 
         <div className="pd-right">
