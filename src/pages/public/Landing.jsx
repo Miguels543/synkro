@@ -802,13 +802,13 @@ const styles = `
     /* Slider */
     .servicios-slider {
       height: auto;
-      min-height: 100svh;
     }
-    
+  
     .slider-slide {
-      padding: 80px 24px 100px;
-      align-items: center;
-      min-height: 100svh;
+      padding: 60px 24px 80px;
+      align-items: flex-start;
+      min-height: auto;
+      height: auto;
     }
 
     .slide-content {
