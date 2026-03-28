@@ -804,32 +804,38 @@ const styles = `
       height: auto;
       min-height: 100svh;
     }
-
+    
     .slider-slide {
-      padding: 72px 6% 96px;
-      align-items: flex-start;
+      padding: 80px 24px 100px;
+      align-items: center;
       min-height: 100svh;
     }
 
+    .slide-content {
+      max-width: 100%;
+      width: 100%;
+    }
+  
     .slide-title { font-size: clamp(30px, 8vw, 48px); }
     .slide-desc  { font-size: 14px; margin-bottom: 28px; max-width: 100%; }
-
+  
     .slide-cta {
       flex-direction: column;
       align-items: flex-start;
       gap: 12px;
     }
-
+  
     .slide-cta .btn-primary {
       font-size: 13px;
       padding: 12px 22px;
+      width: 100%;
     }
-
+  
     .slide-bg-num { font-size: clamp(80px, 25vw, 140px); }
-
-    .slide-dots    { left: 6%; bottom: 32px; }
-    .slider-controls { right: 6%; bottom: 24px; }
-
+  
+    .slide-dots    { left: 24px; bottom: 32px; }
+    .slider-controls { right: 24px; bottom: 24px; }
+  }
     /* Razones */
     .razones-section { padding: 64px 6%; }
 
