@@ -343,6 +343,16 @@ export default function Portafolio() {
         </div>
       </section>
 
+      {/* ── STATS ── */}
+      <div className="port-stats">
+        {STATS.map((s, i) => (
+          <div key={i} className="port-stat" style={{ "--c": statColors[i] }}>
+            <div className="port-stat-n">{s.n}</div>
+            <div className="port-stat-l">{s.l}</div>
+          </div>
+        ))}
+      </div>
+      
       {/* ── PROYECTOS ── */}
       <section className="port-section" id="proyectos">
         <div className="port-section-hdr">
