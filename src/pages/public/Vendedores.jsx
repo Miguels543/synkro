@@ -9,7 +9,7 @@ const pasos = [
 
 const faqs = [
   { q: "Necesito saber programar?", a: "Para nada. Tu trabajo es vender, no desarrollar. Nosotros nos encargamos de toda la parte técnica." },
-  { q: "Cuanto puedo ganar al mes?", a: "Depende de cuánto vendas. Con solo 2 ventas al mes ya superas un salario mínimo en comisiones. Los mejores vendedores ganan más de S/. 1,500 mensuales." },
+  { q: "Cuanto puedo ganar al mes?", a: "Depende de cuánto vendas. Con solo 2 ventas al mes ya tienes ingresos reales. No hay techo, tú decides cuánto quieres ganar." },
   { q: "Hay un mínimo de ventas?", a: "No. Puedes vender a tu ritmo. No hay presión ni penalizaciones por no alcanzar metas." },
   { q: "Como recibo mi pago?", a: "Por transferencia bancaria o Yape/Plin. El pago se procesa dentro de las 48 horas después de confirmar la venta." },
   { q: "Puedo vender desde cualquier pais?", a: "Sí. Vendemos a cualquier negocio hispanohablante, sin importar el país. Solo necesitas internet." },
@@ -803,7 +803,7 @@ function Vendedores() {
   const [ventas, setVentas] = useState(3)
   const [faqOpen, setFaqOpen] = useState(null)
 
-  const comisionPromedio = 110
+  const comisionPromedio = 54 // valor estimado basado en ventas reales de nuestros vendedores. Puede variar según el proyecto vendido, pero es un buen punto de referencia para calcular ganancias potenciales.
   const ganancia = ventas * comisionPromedio
 
   const scrollToSection = (id) => {
@@ -847,7 +847,7 @@ function Vendedores() {
       <div className="vend-numeros">
         {[
           { num: "30%", label: "Comisión máxima por venta" },
-          { num: "50+", label: "Proyectos disponibles ahora" },
+          { num: "S/+", label: "Ganas desde tu primera venta" },
           { num: "48h", label: "Tiempo de pago garantizado" },
         ].map((n, i) => (
           <div className="vend-numero-item" key={i}>

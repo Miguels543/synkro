@@ -600,8 +600,6 @@ const styles = `
   @media (max-width: 1024px) {
     .razones-section { padding: 80px 6%; }
     .razones-header  { gap: 32px; margin-bottom: 48px; }
-    .stats-section   { padding: 60px 6%; }
-    .testimonios-section { padding: 80px 6%; }
     .vendor-section  { padding: 80px 6%; }
     .vendor-inner    { padding: 56px; gap: 48px; }
   }
@@ -688,39 +686,6 @@ const styles = `
     .razon-card { padding: 32px 24px; }
     .razon-card h3 { font-size: 18px; }
     .razon-card p  { font-size: 14px; }
-
-    /* Stats */
-    .stats-section { padding: 48px 6%; }
-
-    .stats-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .stat-item {
-      padding: 28px 16px;
-      border-bottom: 1px solid rgba(0,243,255,0.08);
-    }
-
-    .stat-item:nth-child(2) { border-right: none; }
-    .stat-item:nth-child(3),
-    .stat-item:nth-child(4) { border-bottom: none; }
-
-    .stat-number { font-size: clamp(36px, 10vw, 52px); }
-    .stat-label  { font-size: 10px; letter-spacing: 1px; }
-
-    /* Testimonios */
-    .testimonios-section { padding: 64px 0; }
-
-    .testimonios-header {
-      padding: 0 6%;
-      margin-bottom: 36px;
-    }
-
-    .testimonios-track-wrap::before,
-    .testimonios-track-wrap::after { width: 40px; }
-
-    .testimonio-card { width: 280px; padding: 24px; }
-    .testimonio-texto { font-size: 13px; }
 
     /* Vendor */
     .vendor-section { padding: 64px 6%; }
@@ -921,7 +886,7 @@ function Landing() {
           <div className="vendor-right">
             {[
               { num: "30%", label: "Comision maxima por cada venta cerrada" },
-              { num: "Top 10", label: "Vendedores con premios mensuales garantizados" },
+              { num: "Top 10", label: "Vendedores destacados con premios mensuales" },
               { num: "0 req.", label: "Experiencia tecnica requerida para empezar" },
               { num: "S/+", label: "Ingresos desde tu primer cliente cerrado" },
             ].map((s, i) => (
