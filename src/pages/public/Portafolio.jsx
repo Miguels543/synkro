@@ -4,9 +4,9 @@ import { collection, getDocs } from "firebase/firestore"
 import { db } from "../../firebase/config"
 
 const STATS = [
-  { n: "12+", l: "Proyectos entregados" },
-  { n: "100%", l: "Clientes satisfechos" },
   { n: "48h", l: "Tiempo de respuesta" },
+  { n: "12m", l: "Contrato mínimo garantizado" },
+  { n: "100%", l: "Personalizado para tu negocio" },
   { n: "∞", l: "Soporte post-entrega" },
 ]
 
@@ -343,16 +343,6 @@ export default function Portafolio() {
         </div>
       </section>
 
-      {/* ── STATS ── */}
-      <div className="port-stats">
-        {STATS.map((s, i) => (
-          <div key={i} className="port-stat" style={{ "--c": statColors[i] }}>
-            <div className="port-stat-n">{s.n}</div>
-            <div className="port-stat-l">{s.l}</div>
-          </div>
-        ))}
-      </div>
-
       {/* ── PROYECTOS ── */}
       <section className="port-section" id="proyectos">
         <div className="port-section-hdr">
@@ -414,8 +404,8 @@ export default function Portafolio() {
       <div className="port-cta">
         <div className="port-cta-ttl">¿Listo para<br />vender online?</div>
         <div className="port-cta-sub">
-          Negocios en Piura ya venden online
-          Tienda lista, panel de admin y dominio propio desde S/.80/mes. Sin pago inicial
+          Tu negocio online, listo para vender.
+          Tienda lista, panel de admin y dominio propio desde S/.180/mes. Sin costo de desarrollo.
         </div>
         <div className="port-cta-btns">
           <Link to="/solicitud" className="pbtn cyan">Solicitar proyecto</Link>

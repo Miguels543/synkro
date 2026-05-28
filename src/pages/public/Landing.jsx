@@ -53,24 +53,11 @@ const servicios = [
   },
 ]
 
-const stats = [
-  { num: "50+", label: "Proyectos entregados" },
-  { num: "98%", label: "Clientes satisfechos" },
-  { num: "24h", label: "Tiempo de respuesta" },
-  { num: "3+", label: "Anos de experiencia" },
-]
-
 const razones = [
   { num: "01", title: "Diseño que convierte", desc: "Cada pixel tiene un propósito. Interfaces que generan confianza desde el primer segundo y guían al usuario hacia la acción." },
   { num: "02", title: "Velocidad extrema", desc: "Sitios optimizados para cargar en menos de 2 segundos. Google te premia, tus clientes no esperan." },
   { num: "03", title: "Panel de control propio", desc: "Administra productos, precios y contenido sin tocar una línea de código. Tu negocio, tus manos." },
   { num: "04", title: "Soporte real y continuo", desc: "No desaparecemos después de entregar. Estamos contigo en cada actualización, mejora y duda." },
-]
-
-const testimonios = [
-  { texto: "El sitio que crearon para mi negocio es increible. Mis ventas aumentaron un 30% en el primer mes.", autor: "Juan Perez", rol: "CEO — Empresa Tech" },
-  { texto: "Profesionales de verdad. Entregaron exactamente lo que prometieron y en el tiempo acordado.", autor: "Maria Lopez", rol: "Dueña — Restaurante El Sabor" },
-  { texto: "El panel de administracion es tan sencillo que yo mismo manejo todo sin ayuda tecnica.", autor: "Carlos Rodriguez", rol: "Director — Inmobiliaria CR" },
 ]
 
 const styles = `
@@ -479,158 +466,6 @@ const styles = `
 
   .razon-card:hover .razon-line { width: 100%; }
 
-  /* ── STATS ── */
-  .stats-section {
-    position: relative;
-    z-index: 1;
-    padding: 80px 8%;
-    border-top: 1px solid rgba(0,243,255,0.08);
-    border-bottom: 1px solid rgba(0,243,255,0.08);
-    overflow: hidden;
-  }
-
-  .stats-section::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 300px;
-    background: radial-gradient(ellipse, rgba(0,243,255,0.04) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    position: relative;
-  }
-
-  .stat-item {
-    padding: 40px;
-    text-align: center;
-    border-right: 1px solid rgba(0,243,255,0.08);
-    position: relative;
-    transition: background 0.3s ease;
-  }
-
-  .stat-item:last-child { border-right: none; }
-  .stat-item:hover { background: rgba(0,243,255,0.03); }
-
-  .stat-number {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(48px, 5vw, 72px);
-    font-weight: 800;
-    background: linear-gradient(135deg, #00f3ff, #8a2be2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-    margin-bottom: 12px;
-  }
-
-  .stat-label {
-    font-size: 12px;
-    color: rgba(255,255,255,0.35);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  /* ── TESTIMONIOS ── */
-  .testimonios-section {
-    position: relative;
-    z-index: 1;
-    padding: 120px 8%;
-    overflow: hidden;
-  }
-
-  .testimonios-header { margin-bottom: 64px; }
-
-  .testimonios-track-wrap {
-    overflow: hidden;
-    position: relative;
-  }
-
-  .testimonios-track-wrap::before,
-  .testimonios-track-wrap::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 120px;
-    height: 100%;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .testimonios-track-wrap::before {
-    left: 0;
-    background: linear-gradient(90deg, #000, transparent);
-  }
-
-  .testimonios-track-wrap::after {
-    right: 0;
-    background: linear-gradient(-90deg, #000, transparent);
-  }
-
-  .testimonios-track {
-    display: flex;
-    gap: 24px;
-    animation: slideTestimonios 18s linear infinite;
-    width: max-content;
-  }
-
-  .testimonios-track:hover { animation-play-state: paused; }
-
-  @keyframes slideTestimonios {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  .testimonio-card {
-    background: rgba(0,10,20,0.8);
-    border: 1px solid rgba(0,243,255,0.1);
-    border-radius: 16px;
-    padding: 32px;
-    width: 360px;
-    flex-shrink: 0;
-    transition: border-color 0.3s ease, transform 0.3s ease;
-  }
-
-  .testimonio-card:hover {
-    border-color: rgba(0,243,255,0.35);
-    transform: translateY(-4px);
-  }
-
-  .testimonio-stars {
-    color: #00f3ff;
-    font-size: 14px;
-    letter-spacing: 4px;
-    margin-bottom: 16px;
-  }
-
-  .testimonio-texto {
-    font-size: 15px;
-    color: rgba(255,255,255,0.6);
-    line-height: 1.75;
-    margin-bottom: 24px;
-    font-style: italic;
-  }
-
-  .testimonio-autor {
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-  }
-
-  .testimonio-rol {
-    font-size: 12px;
-    color: #00f3ff;
-    margin-top: 4px;
-    opacity: 0.7;
-  }
-
   /* ── TRABAJA CON NOSOTROS ── */
   .vendor-section {
     position: relative;
@@ -951,7 +786,6 @@ function Landing() {
 
   const tickerItems = ["Diseño Web", "E-commerce", "Landing Pages", "Panel de Control", "Soporte 24/7", "SEO Optimizado", "Alta Velocidad", "Responsive"]
   const doubled = [...tickerItems, ...tickerItems, ...tickerItems, ...tickerItems]
-  const testimoniosDoubled = [...testimonios, ...testimonios, ...testimonios, ...testimonios]
 
   return (
     <div className="landing">
@@ -1057,38 +891,6 @@ function Landing() {
         </div>
       </section>
 
-      {/* STATS */}
-      <div className="stats-section">
-        <div className="stats-grid">
-          {stats.map((s, i) => (
-            <div className="stat-item" key={i}>
-              <div className="stat-number">{s.num}</div>
-              <div className="stat-label">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* TESTIMONIOS AUTO-SCROLL */}
-      <section className="testimonios-section">
-        <div className="testimonios-header">
-          <p className="section-label">Lo que dicen</p>
-          <h2 className="section-title">Clientes que confiaron<br />en Synkro</h2>
-        </div>
-        <div className="testimonios-track-wrap">
-          <div className="testimonios-track">
-            {testimoniosDoubled.map((t, i) => (
-              <div className="testimonio-card" key={i}>
-                <div className="testimonio-stars">★★★★★</div>
-                <p className="testimonio-texto">"{t.texto}"</p>
-                <div className="testimonio-autor">{t.autor}</div>
-                <div className="testimonio-rol">{t.rol}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <div className="divider" />
 
       {/* TRABAJA CON NOSOTROS */}
@@ -1119,9 +921,9 @@ function Landing() {
           <div className="vendor-right">
             {[
               { num: "30%", label: "Comision maxima por cada venta cerrada" },
-              { num: "50+", label: "Proyectos disponibles para vender ahora mismo" },
               { num: "Top 10", label: "Vendedores con premios mensuales garantizados" },
               { num: "0 req.", label: "Experiencia tecnica requerida para empezar" },
+              { num: "S/+", label: "Ingresos desde tu primer cliente cerrado" },
             ].map((s, i) => (
               <div className="vendor-stat-card" key={i}>
                 <div className="vendor-stat-num">{s.num}</div>

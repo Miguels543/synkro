@@ -4,12 +4,11 @@ import { useNavigate } from "react-router-dom"
 const planes = [
   {
     nombre: "Básico",
-    precio: 80,
-    desc: "Todo lo que necesitas para estar online y captar clientes desde el primer día.",
-    color: "#00f3ff",
+    precio: 180,
+    desc: "Presencia profesional con tienda online básica para mostrar tus productos y recibir clientes desde el primer día.",    color: "#00f3ff",
     gradient: "linear-gradient(135deg, #000d1a, #001f3f)",
     funciones: [
-      "Tienda E-commerce básica con catálogo de productos",
+      "Catálogo de productos con carrito y pedidos por WhatsApp",
       "Diseño web profesional y moderno",
       "Adaptación a celulares y tablets",
       "Dominio incluido (1 año)",
@@ -20,10 +19,7 @@ const planes = [
       "Botón de WhatsApp integrado",
       "Conexión con redes sociales",
       "SEO básico (aparecer en Google)",
-      "Redacción de textos del sitio",
-      "Selección de imágenes profesionales",
-      "Asesoría digital personalizada",
-      "Cambios ilimitados",
+      "Cambios mensuales incluidos (hasta 5)",
       "Web lista en 5-7 días",
       "Soporte técnico incluido",
       "Mapa de ubicación Google Maps",
@@ -32,16 +28,17 @@ const planes = [
   },
   {
     nombre: "Intermedio",
-    precio: 120,
+    precio: 250,
     desc: "Vende online y gestiona tu negocio con herramientas profesionales de control total.",
     color: "#a855f7",
     gradient: "linear-gradient(135deg, #0d001a, #1a0035)",
     popular: true,
     funciones: [
       "Todo lo del plan Básico",
-      "Tienda E-commerce completa",
-      "Carrito de compras",
-      "Pasarela de pagos online",
+      "Redacción de textos del sitio",
+      "Selección de imágenes profesionales",
+      "Asesoría digital personalizada",
+      "Tienda E-commerce completa con carrito y pagos online",
       "Configuración de envíos",
       "Carga inicial de productos (50 productos)",
       "Catálogo de productos completo",
@@ -61,7 +58,7 @@ const planes = [
   },
   {
     nombre: "Avanzado",
-    precio: 150,
+    precio: 320,
     desc: "La solución completa para negocios que quieren escalar sin límites ni dependencias.",
     color: "#f97316",
     gradient: "linear-gradient(135deg, #1a0800, #2d1000)",
@@ -90,24 +87,24 @@ const planes = [
 ]
 
 const funcionesConfig = [
-  { id: "ecommerce", label: "Tienda E-commerce", precio: 35, desc: "Carrito, productos y pagos online", requerido: true },
-  { id: "dominio", label: "Dominio + Hosting", precio: 20, desc: "Tu dirección web propia por 1 año" },
-  { id: "ssl", label: "Certificado SSL", precio: 10, desc: "Seguridad y confianza para tus clientes" },
-  { id: "responsive", label: "Diseño Responsive", precio: 15, desc: "Se ve perfecto en móvil y desktop" },
-  { id: "contacto", label: "Formulario de contacto", precio: 5, desc: "Recibe mensajes directamente" },
-  { id: "whatsapp", label: "Chat de WhatsApp", precio: 8, desc: "Botón directo a tu WhatsApp" },
-  { id: "mapa", label: "Mapa de ubicación", precio: 5, desc: "Google Maps integrado" },
-  { id: "galeria", label: "Galería de fotos/videos", precio: 10, desc: "Muestra tu trabajo visualmente" },
-  { id: "blog", label: "Blog integrado", precio: 12, desc: "Publica contenido y mejora tu SEO" },
-  { id: "seo", label: "SEO básico", precio: 15, desc: "Aparecer en Google más fácil" },
-  { id: "panel", label: "Panel administrativo", precio: 25, desc: "Gestiona todo sin código" },
-  { id: "catalogo", label: "Catálogo de productos", precio: 15, desc: "Muestra tu inventario completo" },
-  { id: "reservas", label: "Sistema de reservas", precio: 20, desc: "Citas y reservas online" },
-  { id: "resenas", label: "Página de reseñas", precio: 8, desc: "Muestra testimonios de clientes" },
-  { id: "bot", label: "Bot de WhatsApp", precio: 42, desc: "Respuestas automáticas inteligentes" },
+  { id: "ecommerce", label: "Tienda E-commerce", precio: 80, desc: "Carrito con pedidos por WhatsApp", requerido: true },
+  { id: "dominio", label: "Dominio + Hosting", precio: 30, desc: "Tu dirección web propia por 1 año" },
+  { id: "ssl", label: "Certificado SSL", precio: 15, desc: "Seguridad y confianza para tus clientes" },
+  { id: "responsive", label: "Diseño Responsive", precio: 20, desc: "Se ve perfecto en móvil y desktop" },
+  { id: "contacto", label: "Formulario de contacto", precio: 10, desc: "Recibe mensajes directamente" },
+  { id: "whatsapp", label: "Chat de WhatsApp", precio: 10, desc: "Botón directo a tu WhatsApp" },
+  { id: "mapa", label: "Mapa de ubicación", precio: 10, desc: "Google Maps integrado" },
+  { id: "galeria", label: "Galería de fotos/videos", precio: 20, desc: "Muestra tu trabajo visualmente" },
+  { id: "blog", label: "Blog integrado", precio: 25, desc: "Publica contenido y mejora tu SEO" },
+  { id: "seo", label: "SEO básico", precio: 25, desc: "Aparecer en Google más fácil" },
+  { id: "panel", label: "Panel administrativo", precio: 50, desc: "Gestiona todo sin código" },
+  { id: "catalogo", label: "Catálogo de productos", precio: 25, desc: "Muestra tu inventario completo" },
+  { id: "reservas", label: "Sistema de reservas", precio: 35, desc: "Citas y reservas online" },
+  { id: "resenas", label: "Página de reseñas", precio: 15, desc: "Muestra testimonios de clientes" },
+  { id: "bot", label: "Bot de WhatsApp", precio: 80, desc: "Respuestas automáticas inteligentes" },
 ]
 
-const PRECIO_MAX = 150
+const PRECIO_MAX = 320
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
@@ -979,7 +976,7 @@ function Planes() {
       <div className="planes-header">
         <p className="planes-label">Precios y planes</p>
         <h1 className="planes-title">Elige tu plan<br />o arma el tuyo</h1>
-        <p className="planes-subtitle">Sin contratos largos. Sin sorpresas. Pagas mensual y cancelas cuando quieras.</p>
+        <p className="planes-subtitle">Contrato mínimo de 12 meses. Sin costos de desarrollo. Pagas mensual y tu sitio siempre está activo.</p>
       </div>
 
       <div className="planes-tabs">
@@ -1071,24 +1068,24 @@ function Planes() {
           <div className="guru-banner">
             <div className="guru-left">
               <h3>¿Por qué elegir Synkro?</h3>
-              <p>Muchos servicios cobran mensualidades similares, pero no te dan control real de tu sitio. Con Synkro, tu negocio es tuyo — panel propio, cambios cuando quieras y un diseño que realmente destaca.</p>
+              <p>Muchos servicios cobran mensualidades similares, pero no te dan control real de tu sitio. Con Synkro tienes diseño personalizado, panel propio y todo incluido en una sola mensualidad fija.</p>
             </div>
             <div className="guru-compare">
               <div className="guru-col">
-                <div className="guru-col-title ellos">Servicios tradicionales · ~S/. 115/mes</div>
+              <div className="guru-col-title ellos">Servicios tradicionales · ~S/. 200/mes</div>
                 <div className="guru-item"><span className="dot" />Diseños genéricos</div>
                 <div className="guru-item"><span className="dot" />Debes pedir cambios al soporte</div>
                 <div className="guru-item"><span className="dot" />Sin panel de administración</div>
                 <div className="guru-item"><span className="dot" />Sin automatización de WhatsApp</div>
-                <div className="guru-item"><span className="dot" />El código no es realmente tuyo</div>
+                <div className="guru-item"><span className="dot" />Pagas desarrollo + mensualidad por separado</div>
               </div>
               <div className="guru-col synkro">
-                <div className="guru-col-title nosotros">Synkro · S/. 80/mes</div>
+                <div className="guru-col-title nosotros">Synkro · S/. 180/mes</div>
                 <div className="guru-item"><span className="dot" />Diseño moderno y personalizado</div>
-                <div className="guru-item"><span className="dot" />Cambios ilimitados por tu cuenta</div>
+                <div className="guru-item"><span className="dot" />Hasta 5 cambios mensuales incluidos</div>
                 <div className="guru-item"><span className="dot" />Panel de administración incluido</div>
                 <div className="guru-item"><span className="dot" />Bot de WhatsApp disponible</div>
-                <div className="guru-item"><span className="dot" />El código siempre es tuyo</div>
+                <div className="guru-item"><span className="dot" />Sin costo inicial, solo una mensualidad fija</div>              
               </div>
             </div>
           </div>
@@ -1102,7 +1099,7 @@ function Planes() {
             <h2 className="planes-title" style={{ fontSize: "clamp(28px, 3vw, 48px)" }}>
               Arma tu plan ideal
             </h2>
-            <p className="planes-subtitle">Selecciona las funciones que necesitas. El precio se ajusta solo. Maximo S/. 150/mes.</p>
+            <p className="planes-subtitle">Selecciona las funciones que necesitas. El precio se ajusta solo. Maximo S/. 320/mes.</p>
           </div>
 
           <div className="config-inner">
@@ -1174,7 +1171,7 @@ function Planes() {
               </button>
 
               <p className={`tope-aviso ${alTope ? "visible" : ""}`}>
-                Alcanzaste el maximo de S/. 150/mes
+                Alcanzaste el maximo de S/. 320/mes
               </p>
             </div>
           </div>

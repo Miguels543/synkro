@@ -370,7 +370,7 @@ function Footer() {
       {/* Bottom bar */}
       <div className="footer-bottom">
         <p className="footer-copy">
-          © 2025 <span>Synkro</span>. Todos los derechos reservados.
+          © 2026 <span>Synkro</span>. Todos los derechos reservados.
         </p>
         <p className="footer-made">
           Hecho para negocios que quieren crecer online.

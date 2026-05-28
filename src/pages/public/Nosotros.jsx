@@ -702,9 +702,9 @@ function Nosotros() {
         <div className="nos-hero-left">
           <span className="nos-label">Quienes somos</span>
           <h1 className="nos-hero-title">
-            No somos una agencia.<br />
-            Somos el equipo que<br />
-            <span>tu negocio necesitaba.</span>
+           No somos una agencia más.<br />
+           Somos el equipo que<br />
+           <span>tu negocio necesitaba.</span>
           </h1>
           <p className="nos-hero-desc">
             Synkro nació con una idea simple: que cualquier negocio, sin importar su tamaño,
@@ -713,7 +713,6 @@ function Nosotros() {
         </div>
         <div className="nos-hero-right">
           <div className="nos-card-main">
-            <div className="nos-card-year">2024</div>
             <div className="nos-card-title">El origen de Synkro</div>
             <div className="nos-card-desc">
               Vimos negocios locales perdiendo clientes por no tener presencia digital,
