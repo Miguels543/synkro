@@ -294,7 +294,7 @@ function Footer() {
         <div className="footer-brand">
           <div className="footer-logo">Syn<span>kro</span></div>
           <p className="footer-tagline">
-            Creamos tiendas online para negocios hispanohablantes.
+            Desarrollo web profesional para negocios hispanohablantes.
             Tú vendes, nosotros construimos.
           </p>
           <div className="footer-social">
